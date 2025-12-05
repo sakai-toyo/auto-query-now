@@ -1,0 +1,23 @@
+{
+  "manifest_version": 3,
+  "name": "Auto Query Now",
+  "version": "1.0.0",
+  "description": "URLクエリパラメータを読み取り、ページの入力欄に自動入力する拡張機能",
+  "permissions": [
+    "storage",
+    "activeTab"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content_script.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "options_page": "options.html",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}
