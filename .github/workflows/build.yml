@@ -18,22 +18,15 @@ jobs:
 
     - name: Create extension package
       run: |
-        # 拡張機能に必要なファイルをリストアップ
-        mkdir -p dist
-
-        # 必要なファイルをコピー
-        cp manifest.json dist/
-        cp content_script.js dist/
-        cp options.js dist/
-        cp options.html dist/
-        cp LICENSE dist/
-        cp README.md dist/
-        cp -r icons dist/
-
-        # zipファイルを作成
-        cd dist
-        zip -r ../auto-query-now.zip .
-        cd ..
+        # zipファイルを作成（manifest.jsonがルートにくるように）
+        zip -r auto-query-now.zip \
+          manifest.json \
+          content_script.js \
+          options.js \
+          options.html \
+          LICENSE \
+          README.md \
+          icons/
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
