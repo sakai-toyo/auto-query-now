@@ -1,0 +1,54 @@
+name: Build Chrome Extension
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  release:
+    types: [ created ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Create extension package
+      run: |
+        # 拡張機能に必要なファイルをリストアップ
+        mkdir -p dist
+
+        # 必要なファイルをコピー
+        cp manifest.json dist/
+        cp content_script.js dist/
+        cp options.js dist/
+        cp options.html dist/
+        cp LICENSE dist/
+        cp README.md dist/
+        cp -r icons dist/
+
+        # zipファイルを作成
+        cd dist
+        zip -r ../auto-query-now.zip .
+        cd ..
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: chrome-extension
+        path: auto-query-now.zip
+        retention-days: 90
+
+    - name: Upload release asset
+      if: github.event_name == 'release'
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_path: ./auto-query-now.zip
+        asset_name: auto-query-now-${{ github.event.release.tag_name }}.zip
+        asset_content_type: application/zip

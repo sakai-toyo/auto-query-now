@@ -1,0 +1,20 @@
+# Mac OS
+.DS_Store
+
+# Build artifacts
+dist/
+*.zip
+
+# Editor settings
+.vscode/
+
+# Dependencies (for future use)
+node_modules/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Environment variables
+.env
+.env.local
