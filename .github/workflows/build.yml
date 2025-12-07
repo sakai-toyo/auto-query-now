@@ -45,6 +45,7 @@ jobs:
       if: github.event_name == 'release'
       uses: softprops/action-gh-release@v1
       with:
+        tag_name: ${{ github.event.release.tag_name }}
         files: auto-query-now-${{ github.event.release.tag_name }}.zip
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
