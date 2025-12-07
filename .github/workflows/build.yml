@@ -37,13 +37,14 @@ jobs:
         path: auto-query-now.zip
         retention-days: 90
 
+    - name: Rename zip for release
+      if: github.event_name == 'release'
+      run: mv auto-query-now.zip auto-query-now-${{ github.event.release.tag_name }}.zip
+
     - name: Upload release asset
       if: github.event_name == 'release'
-      uses: actions/upload-release-asset@v1
+      uses: softprops/action-gh-release@v1
+      with:
+        files: auto-query-now-${{ github.event.release.tag_name }}.zip
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ github.event.release.upload_url }}
-        asset_path: ./auto-query-now.zip
-        asset_name: auto-query-now-${{ github.event.release.tag_name }}.zip
-        asset_content_type: application/zip
