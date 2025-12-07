@@ -156,11 +156,17 @@ async function init() {
 
     // ストレージから設定を取得
     const result = await chrome.storage.sync.get(['autoQueryConfigs']);
-    const configs = result.autoQueryConfigs || [];
+    let configs = result.autoQueryConfigs || [];
 
+    // 設定がない場合はデフォルト設定を使用
     if (configs.length === 0) {
-      console.log('[Auto Query Now] No configurations found');
-      return;
+      console.log('[Auto Query Now] No configurations found, using default.');
+      configs = [{
+        id: 'default',
+        queryParam: 'myquery',
+        pressEnterKey: true,
+        enabled: true
+      }];
     }
 
     // URLパラメータを取得

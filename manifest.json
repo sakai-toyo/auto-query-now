@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Auto Query Now",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "URLクエリパラメータを読み取り、ページの入力欄に自動入力する拡張機能",
   "permissions": [
     "storage",
